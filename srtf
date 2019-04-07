@@ -30,6 +30,46 @@ int main()
 		Process_array[i].poll = 0;
 		c.Add_burst_time=c.Add_burst_time+Process_array[i].Burst_time;
 	}
+	Arranging();
+	for(i=0;i<n;i++)
+	{
+		c.Burst[i]=Process_array[i].Burst_time;
+	}
+	Process_array[99].Burst_time = 999;
+	for(m=Process_array[0].Arrival_time;m<=c.Add_burst_time+1;m++)
+	{
+		c.high=99;
+		for(i=0;i<n;i++)
+		{
+			if(Process_array[i].Arrival_time<=m&&Process_array[i].Burst_time<Process_array[c.high].Burst_time&&Process_array[i].poll!=1)
+			{
+				c.high=i;
+			}
+			if(Process_array[c.high].Burst_time==0&&Process_array[i].poll!=1)
+			{
+				Process_array[i].poll=1;
+				Process_array[c.high].Complete_time=m;
+				Process_array[c.high].Burst_time=999;
+				printf("P%d TAKES %d UNITS OF TIME TO COMPLETE\n",Process_array[i].Process_number,Process_array[c.high].Complete_time);
+			}
+		}
+		(Process_array[c.high].Burst_time)--;
+	}
+	for(i=0;i<n;i++)
+	{
+		Process_array[i].Turnaround_time=(Process_array[i].Complete_time)-(Process_array[i].Arrival_time);
+		c.Average_turnaround_time=c.Average_turnaround_time+Process_array[i].Turnaround_time;
+		Process_array[i].Waiting_time=((Process_array[i].Turnaround_time)-c.Burst[i]);
+		c.Average_waiting_time=c.Average_waiting_time+Process_array[i].Waiting_time;
+	}
+	printf("PROCESS_NUMBER\tARRIVAL_TIME\tCOMPLETE_TIME\tTURN_AROUND_TIME\tWAITING_TIME\t\n");
+	for(i=0;i<n;i++)
+	{
+		printf("\tP%d\t\t%d\t\t%d\t\t%d\t\t%d\n",Process_array[i].Process_number,Process_array[i].Arrival_time,Process_array[i].Complete_time,Process_array[i].Turnaround_time,Process_array[i].Waiting_time);
+ 	}
+	printf("AVERAGE TURNAROUND TIME OF ALL PROCESSESS IS :: %f\t\n\n",c.Average_turnaround_time);
+	printf("AVERAGE WAITING TIME OF ALL PROCESSESS IS ::\t %f\t\n",c.Average_waiting_time);
+}
 void Arranging()
 {
 	struct Processess d;
@@ -47,17 +87,5 @@ void Arranging()
 		}
 	}
 }
-	for(i=0;i<n;i++)
-	{
-		c.Burst[i]=Process_array[i].Burst_time;
-	}
-	Process_array[99].Burst_time = 999;
-	for(m=Process_array[0].Arrival_time;m<=c.Add_burst_time+1;m++)
-	{
-		c.high=99;
-		for(i=0;i<n;i++)
-		{
-			if(Process_array[i].Arrival_time<=m&&Process_array[i].Burst_time<Process_array[c.high].Burst_time&&Process_array[i].poll!=1)
-			{
-				c.high=i;
-			}
+
+
