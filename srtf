@@ -30,3 +30,20 @@ int main()
 		Process_array[i].poll = 0;
 		c.Add_burst_time=c.Add_burst_time+Process_array[i].Burst_time;
 	}
+void Arranging()
+{
+	struct Processess d;
+	int i, j;
+	for(i=0;i<n-1;i++)
+	{
+		for(j=i+1;j<n;j++)
+		{
+			if(Process_array[i].Arrival_time>Process_array[j].Arrival_time)
+			{
+				d=Process_array[i];
+				Process_array[i]=Process_array[j];
+				Process_array[j]=d;
+			}
+		}
+	}
+}
