@@ -52,3 +52,12 @@ void Arranging()
 		c.Burst[i]=Process_array[i].Burst_time;
 	}
 	Process_array[99].Burst_time = 999;
+	for(m=Process_array[0].Arrival_time;m<=c.Add_burst_time+1;m++)
+	{
+		c.high=99;
+		for(i=0;i<n;i++)
+		{
+			if(Process_array[i].Arrival_time<=m&&Process_array[i].Burst_time<Process_array[c.high].Burst_time&&Process_array[i].poll!=1)
+			{
+				c.high=i;
+			}
